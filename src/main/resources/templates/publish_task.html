@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>发布任务</title>
+    <script type="application/javascript" src="js/jquery-2.2.3.min.js"></script>
+    <script>
+        function toValid() {
+
+            if($("#user").val()==null||$("#user").val()==''){
+                $("#user_tip").html("请输入姓名")
+                return false
+            }else{
+                $("#user_tip").html("")
+            }
+            if($("#content").val()==null||$("#content").val()==''){
+                $("#content_tip").html("请输入发布内容")
+                return false
+            }else{
+                $("#content_tip").html("")
+            }
+            return true
+        }
+    </script>
+</head>
+<body>
+    <form action="publishTask" onsubmit="return toValid()">
+        <table>
+            <tr>
+                <td>发布人：</td>
+                <td>
+                    <input type="text" id="user" name="user">
+                </td>
+                <td><span id="user_tip" style="color:red;"></span></td>
+            </tr>
+            <tr>
+                <td>任务详情：</td>
+                <td>
+                    <textarea id="content" name="content"></textarea>
+                </td>
+                <td><span id="content_tip" style="color:red;"></span></td>
+            </tr>
+        </table>
+        <input type="submit" value="发布">
+    </form>
+</body>
+</html>

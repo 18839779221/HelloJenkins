@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>主页</title>
+    <script>
+        function toPublish() {
+            location.href = "toPublishTask"
+        }
+    </script>
+</head>
+<body>
+<table border="1">
+    <input type="button" value="发布" onclick="toPublish()"/>
+    <tr>
+        <th>id</th>
+        <th>内容</th>
+        <th>状态</th>
+        <th>发布人</th>
+        <th>承接人</th>
+    </tr>
+    <tr th:each="task:${tasks}">
+        <td th:text="${task.t_id}">1</td>
+        <td th:text="${task.t_content}">今晚吃什么</td>
+        <td th:text="${task.t_state}">待办</td>
+        <td th:text="${task.t_user}">admin</td>
+        <td th:switch="${task.t_state==0}">
+            <a href="#" th:case="true">我来</a>
+            <span th:case="false" th:text="${task.t_ruser}"></span>
+        </td>
+    </tr>
+</table>
+</body>
+</html>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="hellojenkins.mapper.TaskMapper">
+
+    <resultMap id="BaseResultMap" type="hellojenkins.bean.Task">
+        <result column="t_id" jdbcType="INTEGER" property="t_id" />
+        <result column="t_user" jdbcType="VARCHAR" property="t_user" />
+        <result column="t_content" jdbcType="VARCHAR" property="t_content" />
+        <result column="t_state" jdbcType="INTEGER" property="t_state" />
+    </resultMap>
+
+    <select id="getAllTask" resultType="hellojenkins.bean.Task">
+        select * from task
+    </select>
+
+    <insert id="insertTask">
+        insert into task(t_user,t_content,t_state) value(#{t_user},#{t_content},#{t_state})
+    </insert>
+
+    <update id="receiveTask">
+        update task set t_ruser=#{t_ruser}
+    </update>
+
+</mapper>
