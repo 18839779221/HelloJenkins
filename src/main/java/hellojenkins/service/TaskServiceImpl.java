@@ -24,4 +24,13 @@ public class TaskServiceImpl implements TaskService {
         return taskMapper.getAllTask();
     }
 
+    @Override
+    public void receiveTask(int id, String ruser) {
+        Task task = new Task();
+        task.setT_id(id);
+        task.setT_ruser(ruser);
+        task.setT_state(1);
+        taskMapper.receiveTask(task);
+    }
+
 }

@@ -10,4 +10,6 @@ public interface TaskService {
     void publishTask(Task task);
 
     List<Task> getAllTask();
+
+    void receiveTask(int id, String ruser);
 }

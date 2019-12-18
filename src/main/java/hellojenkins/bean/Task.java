@@ -3,7 +3,7 @@ package hellojenkins.bean;
 import java.io.Serializable;
 
 public class Task implements Serializable {
-    private String t_id;
+    private int t_id;
     private String t_user;  //task发起人
     private String t_content;   //task内容
     private int t_state;        //task状态
@@ -17,11 +17,11 @@ public class Task implements Serializable {
         this.t_state = 0;
     }
 
-    public String getT_id() {
+    public int getT_id() {
         return t_id;
     }
 
-    public void setT_id(String t_id) {
+    public void setT_id(int t_id) {
         this.t_id = t_id;
     }
 

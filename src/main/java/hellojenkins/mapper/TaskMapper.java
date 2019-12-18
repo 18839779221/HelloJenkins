@@ -1,6 +1,7 @@
 package hellojenkins.mapper;
 
 import hellojenkins.bean.Task;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 import java.util.List;
 
@@ -10,5 +11,5 @@ public interface TaskMapper {
 
     void insertTask(Task task);
 
-    void receiveTask(String t_ruser);
+    void receiveTask(Task task);
 }

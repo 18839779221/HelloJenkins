@@ -5,6 +5,7 @@
     <resultMap id="BaseResultMap" type="hellojenkins.bean.Task">
         <result column="t_id" jdbcType="INTEGER" property="t_id" />
         <result column="t_user" jdbcType="VARCHAR" property="t_user" />
+        <result column="t_ruser" jdbcType="VARCHAR" property="t_ruser" />
         <result column="t_content" jdbcType="VARCHAR" property="t_content" />
         <result column="t_state" jdbcType="INTEGER" property="t_state" />
     </resultMap>
@@ -18,7 +19,7 @@
     </insert>
 
     <update id="receiveTask">
-        update task set t_ruser=#{t_ruser}
+        update task set t_ruser=#{t_ruser},t_state=#{t_state} where t_id=#{t_id}
     </update>
 
 </mapper>

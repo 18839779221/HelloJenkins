@@ -1,16 +1,44 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:javascript="http://www.w3.org/1999/xhtml"
+      xmlns:v-for="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>主页</title>
+    <script type="application/javascript" src="js/jquery-2.2.3.min.js"></script>
+    <script type="application/javascript" src="js/vue.js"></script>
+    <script src="https://cdn.bootcss.com/vue-resource/1.5.1/vue-resource.min.js"></script>
     <script>
         function toPublish() {
-            location.href = "toPublishTask"
+            var selectedRow = $("tr:first-child[value=3]")
+            alert(selectedRow)
+            // location.href = "toPublishTask"
+        }
+        function inputName(id) {
+            var name = prompt("请输入姓名","")
+            var index = $(this).parents("tr").find("td").val()
+            alert(index)
+            var _this = this;
+            $.ajax({
+                type:"POST",
+                contentType:"application/json;charset=UTF-8",
+                url:"receiveTask",
+                data:JSON.stringify({id:id,ruser:name}),
+                dataType:"json",
+                success:function() {
+                    var row = $(this).parent().index() + 1; // 行位置
+                    var col = $(this).index() + 1; // 列位置
+                    alert("当前位置：第"+row+"行，第"+col+"列")
+                    var selectedRow = $("tr:first-child[value=id]")
+                    selectedRow.children("td").eq(2).val('1')
+                    selectedRow.children("td").eq(4).val(name)
+                },
+            })
+
         }
     </script>
 </head>
 <body>
-<table border="1">
+<table border="1" id="task_table">
     <input type="button" value="发布" onclick="toPublish()"/>
     <tr>
         <th>id</th>
@@ -19,16 +47,47 @@
         <th>发布人</th>
         <th>承接人</th>
     </tr>
-    <tr th:each="task:${tasks}">
-        <td th:text="${task.t_id}">1</td>
-        <td th:text="${task.t_content}">今晚吃什么</td>
-        <td th:text="${task.t_state}">待办</td>
-        <td th:text="${task.t_user}">admin</td>
-        <td th:switch="${task.t_state==0}">
-            <a href="#" th:case="true">我来</a>
-            <span th:case="false" th:text="${task.t_ruser}"></span>
+    <tr v-for="(task,i) in tasklist" key="task.t_id">
+        <td name="tid">{{task.t_id}}</td>
+        <td name="tcontent">{{task.t_content}}</td>
+        <td name="tstate">{{task.t_state}}</td>
+        <td name="tuser">{{task.t_user}}</td>
+        <td>
+            <a v-if="task.t_state==0" :href="inputName(task.t_id)" name="truser">我来</a>
+            <span v-else="task.t_state==0" name="truser">{{task.t_ruser}}</span>
         </td>
+
+
+
     </tr>
+
+
 </table>
+<script>
+    var vm = new Vue({
+        el:'#task_table',
+        data:{tasklist:null},
+        methods:{
+            toPublish:function () {
+
+            },
+            inputName:function (id) {
+                var name = prompt("请输入姓名","")
+
+            },
+
+
+        },
+        mounted:function(){
+            this.$http.get('/api/tasks').then(function(res){
+                console.log(res.body)
+                this.tasklist = res.body
+            },function(){
+                console.log('请求失败处理');
+            });
+        }
+
+    })
+</script>
 </body>
 </html>
